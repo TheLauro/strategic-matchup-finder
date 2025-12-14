@@ -88,3 +88,11 @@ nb-configuration.xml
 ## Miscellaneous
 ##############################
 *.log
+
+# Adições do IntelliJ (DataGrip e HTTP Client)
+shelf/
+workspace.xml
+queries/
+dataSources/
+dataSources.local.xml
+httpRequests/
