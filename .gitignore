@@ -1,7 +1,6 @@
 ##############################
-## Java
+## Java & Core
 ##############################
-.mtj.tmp/
 *.class
 *.jar
 *.war
@@ -9,9 +8,10 @@
 *.nar
 hs_err_pid*
 replay_pid*
+*.log
 
 ##############################
-## Maven
+## Maven & Spring Boot
 ##############################
 target/
 pom.xml.tag
@@ -24,29 +24,31 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+HELP.md
+
+# Regras de Exceção do Spring (Mantém pastas 'target' se estiverem dentro de src)
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 ##############################
-## Gradle
+## IntelliJ IDEA (JetBrains)
 ##############################
-bin/
-build/
-.gradle
-.gradletasknamecache
-gradle-app.setting
-!gradle-wrapper.jar
-
-##############################
-## IntelliJ
-##############################
-out/
 .idea/
 .idea_modules/
 *.iml
 *.ipr
 *.iws
+out/
+shelf/
+workspace.xml
+# Funcionalidades Database e HTTP Client do Ultimate
+queries/
+dataSources/
+dataSources.local.xml
+httpRequests/
 
 ##############################
-## Eclipse
+## Eclipse / STS (Spring Tools Suite)
 ##############################
 .settings/
 bin/
@@ -54,13 +56,20 @@ tmp/
 .metadata
 .classpath
 .project
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
 *.tmp
 *.bak
 *.swp
-*~.nib
 local.properties
-.loadpath
-.factorypath
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
 
 ##############################
 ## NetBeans
@@ -74,25 +83,7 @@ nbactions.xml
 nb-configuration.xml
 
 ##############################
-## Visual Studio Code
-##############################
-.vscode/
-.code-workspace
-
-##############################
-## OS X
+## Sistema Operacional (Mac/Linux)
 ##############################
 .DS_Store
-
-##############################
-## Miscellaneous
-##############################
-*.log
-
-# Adições do IntelliJ (DataGrip e HTTP Client)
-shelf/
-workspace.xml
-queries/
-dataSources/
-dataSources.local.xml
-httpRequests/
+.mtj.tmp/
