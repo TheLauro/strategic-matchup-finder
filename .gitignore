@@ -38,6 +38,11 @@ HELP.md
 *.iml
 *.ipr
 *.iws
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 out/
 shelf/
 workspace.xml
@@ -46,6 +51,11 @@ queries/
 dataSources/
 dataSources.local.xml
 httpRequests/
+<<<<<<< Updated upstream
+=======
+requests.http
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 ##############################
 ## Eclipse / STS (Spring Tools Suite)
