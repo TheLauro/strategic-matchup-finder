@@ -5,6 +5,9 @@ import org.springframework.lang.NonNull;
 
 public record ChampionDTO(Long id, String name, String imageUrl) {
 
+    public ChampionDTO(String name, String imageUrl){
+        this(null, name, imageUrl);
+    }
     public ChampionDTO(@NonNull Champion champion){
         this(champion.getId(), champion.getName(), champion.getImageUrl());
     }
