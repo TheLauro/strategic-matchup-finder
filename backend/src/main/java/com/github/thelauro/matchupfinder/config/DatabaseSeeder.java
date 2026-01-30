@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private ScrapperService scrapperService;
+    private final ScrapperService scrapperService;
 
     public DatabaseSeeder(ScrapperService scrapperService) {
         this.scrapperService = scrapperService;
@@ -17,5 +17,6 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         scrapperService.scrapChampions();
+        scrapperService.scrapMatchups();
     }
 }
