@@ -13,7 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -62,6 +62,8 @@ private final ChampionRepository championRepository;
     @Transactional
     public void scrapMatchups(){
 
+        LocalDateTime scrapStart = LocalDateTime.now();
+
         List<Champion> champions = championRepository.findAll();
         List<String> lanes = Arrays.stream(Lane.values()).map(Enum::name).map(String::toLowerCase).toList();
 
@@ -102,11 +104,12 @@ private final ChampionRepository championRepository;
                         Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(champion,enemy,enumLane)
                                 .orElseGet( ()->{
 
-                                    return new Matchup(null,champion,enemy,enumLane,0.0,0);
+                                    return new Matchup(null,champion,enemy,enumLane,0.0,0,null);
                                 });
 
                         newMatchup.setWinRate(listOfWinRates.get(i));
                         newMatchup.setGamesPlayed(listOfGames.get(i));
+                        newMatchup.setLastUpdate(LocalDateTime.now());
 
                         matchupRepository.save(newMatchup);
                     }
@@ -119,5 +122,6 @@ private final ChampionRepository championRepository;
 
         }
 
+        matchupRepository.deleteByLastUpdateBefore(scrapStart);
     }
 }

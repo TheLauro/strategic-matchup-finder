@@ -4,6 +4,8 @@ import com.github.thelauro.matchupfinder.model.enums.Lane;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -30,5 +32,6 @@ public class Matchup {
     private Lane lane;
     private Double winRate;
     private Integer gamesPlayed;
+    private LocalDateTime lastUpdate;
 
 }
