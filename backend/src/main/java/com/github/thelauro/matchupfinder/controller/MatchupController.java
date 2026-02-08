@@ -4,6 +4,7 @@ import com.github.thelauro.matchupfinder.dto.MatchupInputDTO;
 import com.github.thelauro.matchupfinder.dto.MatchupOutputDTO;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.service.MatchupService;
+import com.github.thelauro.matchupfinder.service.ScrapperService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class MatchupController {
 
     private final MatchupService matchupService;
+    private final ScrapperService scrapperService;
 
-    public MatchupController(MatchupService matchupService) {
+    public MatchupController(MatchupService matchupService, ScrapperService scrapperService) {
         this.matchupService = matchupService;
+        this.scrapperService = scrapperService;
     }
 
     @GetMapping
@@ -33,9 +36,9 @@ public class MatchupController {
       }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public void upsertMatchup(@RequestBody MatchupInputDTO data){
-        matchupService.upsertMatchup(data);
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/update")
+    public void updateMatchups(){
+        scrapperService.scrapMatchups();
     }
 }

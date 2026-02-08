@@ -8,6 +8,7 @@ import com.github.thelauro.matchupfinder.model.Matchup;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.repository.ChampionRepository;
 import com.github.thelauro.matchupfinder.repository.MatchupRepository;
+import jakarta.transaction.Transactional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -28,6 +29,7 @@ private final ChampionRepository championRepository;
         this.championRepository = championRepository;
     }
 
+    @Transactional
     public void scrapChampions(){
 
         Document champions;
@@ -57,6 +59,7 @@ private final ChampionRepository championRepository;
         }
     }
 
+    @Transactional
     public void scrapMatchups(){
 
         List<Champion> champions = championRepository.findAll();
@@ -92,18 +95,20 @@ private final ChampionRepository championRepository;
 
                     Lane enumLane = Lane.valueOf(lane.toUpperCase());
 
-                    System.out.println(listOfEnemies);
-                    System.out.println(listOfWinRates);
-                    System.out.println(listOfGames);
-
                     for(int i = 0; i<listOfWinRates.size();i++){
 
                         Champion enemy = championRepository.findByName(listOfEnemies.get(i));
 
-                        Matchup newMatchup = new Matchup(null,champion,enemy,enumLane,listOfWinRates.get(i),listOfGames.get(i));
+                        Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(champion,enemy,enumLane)
+                                .orElseGet( ()->{
+
+                                    return new Matchup(null,champion,enemy,enumLane,0.0,0);
+                                });
+
+                        newMatchup.setWinRate(listOfWinRates.get(i));
+                        newMatchup.setGamesPlayed(listOfGames.get(i));
 
                         matchupRepository.save(newMatchup);
-
                     }
 
                 } catch(IOException e){
