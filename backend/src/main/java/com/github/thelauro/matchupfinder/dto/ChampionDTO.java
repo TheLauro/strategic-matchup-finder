@@ -13,6 +13,6 @@ public record ChampionDTO(Long id, String name, String imageUrl) {
     }
 
     public Champion toEntity(){
-        return new Champion(this.imageUrl,this.name,null);
+        return new Champion(null,this.name,this.imageUrl);
     }
 }

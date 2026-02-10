@@ -19,37 +19,27 @@ public interface MatchupRepository extends JpaRepository<Matchup, Long> {
         select m from Matchup m 
         join fetch m.myChampion c 
         join fetch m.enemyChampion e 
-        join fetch m.lane l  
         where c.id = :myChampionId 
         and e.id = :enemyChampionId
-        and l = :lane
+        and m.lane = :lane
 """)
     Optional<Matchup> findByMyChampionIdAndEnemyChampionIdAndLane(
             @Param("myChampionId")Long myChampionId,
-            @Param("enemyChampiondId")Long enemyChampionId,
+            @Param("enemyChampionId")Long enemyChampionId,
             @Param("lane")Lane lane);
 
     @Query(value = """
         select m from Matchup m 
+        join fetch m.myChampion
         join fetch m.enemyChampion e 
-        join fetch m.lane l  
         where e.id = :enemyChampionId
-        and l = :lane
+        and m.lane = :lane
 """)
     List<Matchup> findByEnemyChampionIdAndLane(
             @Param("enemyChampionId")Long enemyChampionId,
             @Param("lane")Lane lane);
 
 
-    @Query(value = """
-        select m from Matchup m 
-        join fetch m.myChampion c 
-        join fetch m.enemyChampion e 
-        join fetch m.lane l  
-        where c = :myChampion
-        and e = :enemyChampion
-        and l = :lane
-""")
     Optional<Matchup> findByMyChampionAndEnemyChampionAndLane(
             @Param("myChampion")Champion myChampion,
             @Param("enemyChampion")Champion enemyChampion,
