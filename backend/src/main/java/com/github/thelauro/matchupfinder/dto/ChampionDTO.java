@@ -5,11 +5,14 @@ import org.springframework.lang.NonNull;
 
 public record ChampionDTO(Long id, String name, String imageUrl) {
 
+    public ChampionDTO(String name, String imageUrl){
+        this(null, name, imageUrl);
+    }
     public ChampionDTO(@NonNull Champion champion){
         this(champion.getId(), champion.getName(), champion.getImageUrl());
     }
 
     public Champion toEntity(){
-        return new Champion(this.imageUrl,this.name,null);
+        return new Champion(null,this.name,this.imageUrl);
     }
 }

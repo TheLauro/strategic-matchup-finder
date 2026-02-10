@@ -34,20 +34,4 @@ public class MatchupService {
         return matchupRepository.findByEnemyChampionIdAndLane(id,lane).stream().map(MatchupOutputDTO::new).toList();
     }
 
-    public void upsertMatchup(MatchupInputDTO data){
-
-        Matchup matchup = matchupRepository.findByMyChampionIdAndEnemyChampionIdAndLane(data.heroId(),data.enemyId(),data.lane())
-                        .orElseGet(()-> {
-                            Champion myChampion = championRepository.getReferenceById(data.heroId());
-                            Champion enemyChampion = championRepository.getReferenceById(data.enemyId());
-
-                            return new Matchup(null, myChampion, enemyChampion, data.lane(),0.0,0);
-                        });
-
-        matchup.setWinRate(data.winRate());
-        matchup.setGamesPlayed(data.gamesPlayed());
-
-        matchupRepository.save(matchup);
-    }
-
 }
