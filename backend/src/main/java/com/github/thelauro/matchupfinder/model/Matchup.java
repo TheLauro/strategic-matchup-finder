@@ -11,6 +11,14 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uniqueMatchup",
+                        columnNames = {"hero_id", "enemy_id", "lane"}
+                )
+        }
+)
 public class Matchup {
 
     @Id

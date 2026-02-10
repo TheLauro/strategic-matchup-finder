@@ -12,9 +12,11 @@ import jakarta.transaction.Transactional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,7 +61,6 @@ private final ChampionRepository championRepository;
         }
     }
 
-    @Transactional
     public void scrapMatchups(){
 
         LocalDateTime scrapStart = LocalDateTime.now();
@@ -97,22 +98,7 @@ private final ChampionRepository championRepository;
 
                     Lane enumLane = Lane.valueOf(lane.toUpperCase());
 
-                    for(int i = 0; i<listOfWinRates.size();i++){
-
-                        Champion enemy = championRepository.findByName(listOfEnemies.get(i));
-
-                        Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(champion,enemy,enumLane)
-                                .orElseGet( ()->{
-
-                                    return new Matchup(null,champion,enemy,enumLane,0.0,0,null);
-                                });
-
-                        newMatchup.setWinRate(listOfWinRates.get(i));
-                        newMatchup.setGamesPlayed(listOfGames.get(i));
-                        newMatchup.setLastUpdate(LocalDateTime.now());
-
-                        matchupRepository.save(newMatchup);
-                    }
+                    saveChampionMatchups(champion, enumLane, listOfEnemies, listOfWinRates, listOfGames);
 
                 } catch(IOException e){
                     e.printStackTrace();
@@ -123,5 +109,30 @@ private final ChampionRepository championRepository;
         }
 
         matchupRepository.deleteByLastUpdateBefore(scrapStart);
+    }
+
+    @Transactional
+    protected void saveChampionMatchups(Champion champion, Lane enumLane, List<String> enemies, List<Double> winRates, List<Integer> gamesPlayeds){
+
+        List<Matchup> championMatchups = new ArrayList<>();
+
+        for(int i = 0; i<winRates.size();i++){
+
+            Champion enemy = championRepository.findByName(enemies.get(i));
+
+            Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(champion,enemy,enumLane)
+                    .orElseGet( ()->{
+
+                        return new Matchup(null,champion,enemy,enumLane,0.0,0,null);
+                    });
+
+            newMatchup.setWinRate(winRates.get(i));
+            newMatchup.setGamesPlayed(gamesPlayeds.get(i));
+            newMatchup.setLastUpdate(LocalDateTime.now());
+
+            championMatchups.add(newMatchup);
+        }
+
+        matchupRepository.saveAll(championMatchups);
     }
 }
