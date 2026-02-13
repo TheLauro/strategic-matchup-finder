@@ -7,3 +7,20 @@ h2{
     text-align: center;
     color: rgba(200, 171, 113, 0.914)
 }
+.lanes-container{
+
+    display: flex;
+    justify-content: center;
+}
+
+.clean-btn{
+
+    background: none;
+    border: none;
+}
+
+.lane-icon{
+
+    padding: 10px;
+    
+}
