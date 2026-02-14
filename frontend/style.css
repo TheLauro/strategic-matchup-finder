@@ -20,14 +20,14 @@ h2{
     border: none;
 }
 
-.lane-icon{
+.pool-lane-icon{
 
     padding: 10px;
     transition: 250ms ease;
     
 }
 
-.lane-icon:hover{
+.pool-lane-icon:hover{
     transform: scale(1.1);
     cursor: pointer;
 }
@@ -54,3 +54,37 @@ h2{
     padding-right: 180px;
     padding-left: 15px;
 }
+
+.lane-select-container{
+
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    border: 2px solid rgba(200, 171, 113, 0.914);;
+
+    height: 45px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.select-lane-icon img{
+
+    width: 30px;
+}
+
+.select-lane-icon{
+
+    border-style: double;
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    transition: border-color 200ms;
+
+}
+
+.select-lane-icon:hover{
+
+    border: 1px solid rgba(200, 171, 113, 0.914);   
+}
+
