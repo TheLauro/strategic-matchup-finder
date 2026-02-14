@@ -31,3 +31,26 @@ h2{
     transform: scale(1.1);
     cursor: pointer;
 }
+
+.search-container{
+
+    margin-top: 7%;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 20%
+}
+
+.champion-search{
+    
+}
+
+.champion-search input{
+
+    border-radius: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-right: 180px;
+    padding-left: 15px;
+}
