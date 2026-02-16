@@ -34,6 +34,15 @@ body, button, input, li {
 
     display: flex;
     justify-content: center;
+
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    border: 1px solid rgba(200, 171, 113, 0.914);;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+
+    width: fit-content;
+    margin: auto;
 }
 
 .clean-btn{
@@ -65,7 +74,7 @@ body, button, input, li {
 }
 
 .champion-search{
-    
+
     position: relative;
 }
 
