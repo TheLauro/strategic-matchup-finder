@@ -168,34 +168,36 @@ body, button, input, li {
 
 .lane-select-container{
 
-    background-color: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    border: 2px solid rgba(200, 171, 113, 0.914);;
-
-    height: 45px;
-    display: flex;
-
     justify-content: center;
     align-items: center;
+
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    border: 1px solid rgba(200, 171, 113, 0.914);;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+
+    overflow: hidden;
+    height: 45px;
+    display: flex;
 }
 
 .select-lane-icon img{
 
-    width: 30px;
+    height: 30px;
 }
 
 .select-lane-icon{
 
-    border-style: double;
-    border: 1px solid transparent;
-    border-radius: 10px;
-
-    transition: border-color 200ms;
+    height: 45px;
+    transition: background-color 100ms;
 
 }
 
 .select-lane-icon:hover{
 
-    border: 1px solid rgba(200, 171, 113, 0.914);   
+    cursor: pointer;
+    background-color: #1c273a
 }
+
 
