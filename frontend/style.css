@@ -65,12 +65,18 @@ body, button, input, li {
 
 .search-container{
 
-    margin-top: 7%;
+    width: fit-content;
+    margin: 7% auto;
+    height: 45px;
+    
 
     display: flex;
     justify-content: center;
 
-    gap: 20%
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid rgba(200, 171, 113, 0.914);
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
 }
 
 .champion-search{
@@ -80,17 +86,16 @@ body, button, input, li {
 
 .champion-search input{
 
-    border-radius: 3px;
+    width: 300px;
+
     border: none;
     padding-bottom: 15px;
     padding-top: 15px;
-    padding-right: 180px;
+    padding-right: 15px;
     padding-left: 15px;
+    background-color: transparent;
 
-    background-color: rgba(0,0,0,0.4);
-    border: 1px solid rgba(200, 171, 113, 0.914);
-    color: rgb(255, 255, 255);
-    backdrop-filter: blur(3px);
+    color: #ffffff;
 
 }
 
@@ -175,25 +180,32 @@ body, button, input, li {
     border: 1px solid rgba(200, 171, 113, 0.914);
 }
 
+.search-separator{
+
+    width: 1px;
+    height: 45px;
+
+    background-color: rgba(200, 171, 113, 0.914);
+}
+
 .lane-select-container{
 
+    display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    border: 1px solid rgba(200, 171, 113, 0.914);;
-    backdrop-filter: blur(3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-
+    background-color: transparent;
+    border: transparent;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
     overflow: hidden;
     height: 45px;
-    display: flex;
 }
 
 .select-lane-icon img{
 
     height: 30px;
+    padding-inline: 1px;
 }
 
 .select-lane-icon{
