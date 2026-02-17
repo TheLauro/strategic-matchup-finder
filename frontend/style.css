@@ -84,15 +84,25 @@ body, button, input, li {
     position: relative;
 }
 
+.search-icon{
+
+    position: absolute;
+    color: rgba(200, 171, 113, 0.914);
+    margin-top: 12px;
+    margin-left: 5px;
+
+    pointer-events: none;
+}
+
 .champion-search input{
 
-    width: 300px;
+    width: 350px;
 
     border: none;
     padding-bottom: 15px;
     padding-top: 15px;
     padding-right: 15px;
-    padding-left: 15px;
+    padding-left: 35px;
     background-color: transparent;
 
     color: #ffffff;
