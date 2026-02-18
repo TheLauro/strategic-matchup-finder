@@ -270,7 +270,7 @@ ul::-webkit-scrollbar-thumb:hover{
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    
+
 }
 
 .pool-select-header{
@@ -288,6 +288,22 @@ ul::-webkit-scrollbar-thumb:hover{
 
     color: rgba(200, 171, 113, 0.914);
     margin-left: 2%;
+
+}
+
+.pool-lane-image{
+
+    margin-bottom: -10px;
+    width: 100px;
+}
+
+.pool-lane-name{
+
+    color: rgba(200, 171, 113, 0.914);
+    font-size: larger;
+    display: block;
+
+    text-align: center;
 
 }
 
@@ -424,7 +440,7 @@ ul::-webkit-scrollbar-thumb:hover{
     left:0;
     padding: 0;
     padding-inline: 10px;
-
+    
     flex: 1;
     overflow-y: auto;
 
