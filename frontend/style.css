@@ -11,6 +11,14 @@ body{
     background-color: #0a0a12;
     min-height: 100vh;
 }
+.hidden{
+    display: none;
+}
+
+.active{
+
+    display: flex;
+}
 
 
 h1{
@@ -253,6 +261,7 @@ ul::-webkit-scrollbar-thumb:hover{
 
     display: flex;
     justify-content: center;
+    align-items: center;
     
     height: 80%;
     width: 80%;
@@ -328,8 +337,9 @@ ul::-webkit-scrollbar-thumb:hover{
        
 }
 
-.pool-champion{
+.pool-champion:hover{
 
+    cursor: pointer;
 }
 
 .pool-champion-name{
@@ -457,6 +467,48 @@ ul::-webkit-scrollbar-thumb:hover{
 
     max-width: 100%;
     overflow-x: hidden;
+}
+
+.pool-window-confirmation{
+
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(200, 171, 113, 0.914);
+    background-color: #030305;
+    border-radius: 10px;
+    width: 30%;
+
+    z-index: 1001;
+
+}
+
+.conf-msg{
+    margin-inline: 10%;
+}
+
+.highlight-white{
+
+    color: #ffffff;
+}
+
+.action-button{
+    
+    text-align: center;
+    color: rgba(200, 171, 113, 0.914);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid rgba(200, 171, 113, 0.914);
+    border-radius: 10px;
+    margin-bottom: 10%;
+    margin-inline: 10px;
+
+    width: 100px;
+}
+
+.action-button:hover{
+
+    cursor: pointer;
 }
 
 
