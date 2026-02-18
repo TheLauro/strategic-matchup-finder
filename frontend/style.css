@@ -266,7 +266,10 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .pool-selected-container{
 
-    flex: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
     
 }
 
@@ -275,6 +278,7 @@ ul::-webkit-scrollbar-thumb:hover{
     display: flex;
     justify-content:space-between;
     align-items: end;
+    height: 128px;
 
 }
 
@@ -289,17 +293,17 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .user-lane-pool-list{
 
-
     display: grid;
+    align-content: start;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
     list-style: none;
     row-gap: 40px;
 
     padding: 0;
-    padding-left: 10px;
+    padding-inline: 10px;
 
-    max-height: 590px;
+    flex: 1;
     overflow-y: auto;
 
     max-width: 100%;
@@ -347,14 +351,21 @@ ul::-webkit-scrollbar-thumb:hover{
 .pool-options-container{
 
     position: relative;
-
-    flex: 50%;
-
     margin-inline: auto;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.pool-option-header{
+
+    height: 128px;
 }
 
 
-.pool-option-header{
+.pool-option-search-container{
 
     display: flex;
     
@@ -402,9 +413,8 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .lane-options-pool-list{
 
-    margin-top: 57px;
-
     display: grid;
+    align-content: start;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
     row-gap: 40px; 
@@ -413,9 +423,9 @@ ul::-webkit-scrollbar-thumb:hover{
 
     left:0;
     padding: 0;
-    padding-left: 10px;
+    padding-inline: 10px;
 
-    max-height: 590px;
+    flex: 1;
     overflow-y: auto;
 
     max-width: 100%;
