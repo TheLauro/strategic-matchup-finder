@@ -318,14 +318,14 @@ ul::-webkit-scrollbar-thumb:hover{
 
     padding: 0;
     padding-inline: 10px;
+    margin-bottom: 0;
 
     flex: 1;
     overflow-y: auto;
 
     max-width: 100%;
     overflow-x: hidden;
-    
-    
+       
 }
 
 .pool-champion{
@@ -450,6 +450,7 @@ ul::-webkit-scrollbar-thumb:hover{
     left:0;
     padding: 0;
     padding-inline: 10px;
+    margin-bottom: 0;
     
     flex: 1;
     overflow-y: auto;
