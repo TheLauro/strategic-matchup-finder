@@ -186,7 +186,8 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .champion-item:hover{
 
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(145, 143, 143, 0.4);
+    color: rgba(200, 171, 113, 0.914);
 }
 
 .champion-item img{
