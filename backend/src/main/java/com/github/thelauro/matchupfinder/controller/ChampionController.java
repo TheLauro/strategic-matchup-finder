@@ -35,4 +35,9 @@ public class ChampionController {
     public void upsertChampions(){
         scrapperService.scrapChampions();
     }
+
+    @PutMapping
+    public void updateChampionsMostCommonLane(){
+        championService.updateChampionsCommonLane();
+    }
 }

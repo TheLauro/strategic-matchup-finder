@@ -1,8 +1,6 @@
 package com.github.thelauro.matchupfinder.service;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.github.thelauro.matchupfinder.dto.ChampionDTO;
-import com.github.thelauro.matchupfinder.dto.MatchupInputDTO;
 import com.github.thelauro.matchupfinder.model.Champion;
 import com.github.thelauro.matchupfinder.model.Matchup;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
@@ -11,8 +9,8 @@ import com.github.thelauro.matchupfinder.repository.MatchupRepository;
 import jakarta.transaction.Transactional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.io.IOException;
@@ -42,12 +40,53 @@ private final ChampionRepository championRepository;
                     .get();
 
             Elements listOfChampions = champions.select("div.truncate");
-            Elements listOfImages = champions.select("img");
+
+            if(listOfChampions.size() == championRepository.findAll().size()){
+                return;
+            }
+
+            Elements listOfIcons = champions.select("img");
             List<String> championsNames = listOfChampions.eachText();
-            List<String> championsImagesUrl = listOfImages.eachAttr("src");
+            List<String> championsIconsUrl = listOfIcons.eachAttr("src");
+
+            List<String> championsSplashArtUrl = new ArrayList<>();
+
+            for(int i=0;i<championsNames.size();i++){
+
+                String championName = championsNames.get(i).toLowerCase().replace(" ","").replace("'","");
+
+                if(championName.equals("nunu&willump")){
+
+                    championName = "nunu";
+                }
+
+                if(championName.equals("renataglasc")){
+                    championName = "renata";
+                }
+
+                try{
+
+                    Thread.sleep(500);
+
+                    Document championPage = Jsoup.connect("https://u.gg/lol/champions/"+championName+"/build")
+                            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+                            .get();
+
+                    Element SplashArt = championPage.selectFirst("img.opacity-50");
+                    if(SplashArt != null) {
+                        championsSplashArtUrl.add(SplashArt.attr("src"));
+                    }
+
+                } catch (Exception e){
+
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println(championsSplashArtUrl.toString());
 
             for(int i = 0; i<championsNames.size();i++){
-                ChampionDTO data = new ChampionDTO(championsNames.get(i), championsImagesUrl.get(i));
+                ChampionDTO data = new ChampionDTO(championsNames.get(i), championsIconsUrl.get(i),championsSplashArtUrl.get(i),null);
 
                 Champion champion = data.toEntity();
 
@@ -72,7 +111,16 @@ private final ChampionRepository championRepository;
 
         for(Champion champion : champions){
 
-            String championName = champion.getName().replace(" ","");
+            String championName = champion.getName().replace(" ","").toLowerCase();
+
+            if(championName.equals("nunu&willump")){
+
+                championName = "nunu";
+            }
+
+            if(championName.equals("renataglasc")){
+                championName = "renata";
+            }
 
             for(String lane : lanes){
 

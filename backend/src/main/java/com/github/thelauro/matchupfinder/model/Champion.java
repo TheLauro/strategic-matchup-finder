@@ -1,9 +1,7 @@
 package com.github.thelauro.matchupfinder.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.github.thelauro.matchupfinder.model.enums.Lane;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +19,9 @@ public class Champion {
     @EqualsAndHashCode.Include
     private Long id;
     private String name;
-    private String imageUrl;
-
+    private String iconUrl;
+    private String splashArtUrl;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Lane mostCommonLane;
 }
