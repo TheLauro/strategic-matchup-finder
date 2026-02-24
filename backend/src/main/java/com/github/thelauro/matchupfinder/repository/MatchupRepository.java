@@ -3,13 +3,13 @@ package com.github.thelauro.matchupfinder.repository;
 import com.github.thelauro.matchupfinder.model.Champion;
 import com.github.thelauro.matchupfinder.model.Matchup;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +45,18 @@ public interface MatchupRepository extends JpaRepository<Matchup, Long> {
             @Param("enemyChampion")Champion enemyChampion,
             @Param("lane")Lane lane);
 
+    @Transactional
     @Modifying
     @Query(value = """
         delete from Matchup m where m.lastUpdate < :scrapStart
 """)
     void deleteByLastUpdateBefore(
             @Param("scrapStart")LocalDateTime scrapStart);
+
+    @Query("""
+    select m.lane from Matchup m where m.myChampion.id = :myChampionId group by m.lane order by sum(m.gamesPlayed) desc
+    """)
+    List<Lane> findMostCommonLaneByMyChampionId(
+            @Param("myChampionId")Long myChampionId
+    );
 }
