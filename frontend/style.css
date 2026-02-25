@@ -259,7 +259,7 @@ ul::-webkit-scrollbar-thumb:hover{
     background-color: #1c273a
 }
 
-.pool-select-overlay{
+#pool-select-overlay{
 
     position: fixed;
     top:0;
@@ -291,6 +291,13 @@ ul::-webkit-scrollbar-thumb:hover{
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
 }
 
+#exit-pool-selection{
+    
+    position: absolute;
+    margin-left: 96%;
+    margin-top: 1%;
+}
+
 .pool-selected-container{
 
     display: flex;
@@ -318,13 +325,18 @@ ul::-webkit-scrollbar-thumb:hover{
 
 }
 
-.pool-lane-image{
+#pool-lane-view{
+
+    padding-right: 5px;
+}
+
+#lane-image{
 
     margin-bottom: -10px;
     width: 100px;
 }
 
-.pool-lane-name{
+#lane-name{
 
     color: rgba(200, 171, 113, 0.914);
     font-size: larger;
