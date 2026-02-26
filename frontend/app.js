@@ -1,3 +1,4 @@
+/*Implement dynamic pool selection modal*/
 const homeLaneButtons = document.querySelectorAll('.pool-home-lane-icon');
 const Lane = Object.freeze({
     TOP: 'Top',
@@ -10,9 +11,6 @@ const lanes = Object.keys(Lane);
 
 const poolSelectWindow = document.getElementById('pool-select-overlay');
 const poolWindowView = document.getElementById('pool-lane-view');
-
-
-
 const closeSelectWindowButton = document.getElementById('exit-pool-selection');
 
 homeLaneButtons.forEach((button,i)=>{
@@ -30,12 +28,58 @@ homeLaneButtons.forEach((button,i)=>{
         `;
 
         poolSelectWindow.classList.remove('hidden');
-        poolSelectWindow.classList.add('active');
+
     });
 });
 
 closeSelectWindowButton.addEventListener('click', (event) =>{
 
-    poolSelectWindow.classList.remove('active');
     poolSelectWindow.classList.add('hidden');
+    
+});
+
+/*Implement dynamic champion search list*/
+const championSearchInputs = document.querySelectorAll('.champion-search-input');
+const championSearchLists = document.querySelectorAll('.champion-list');
+
+championSearchInputs.forEach((input,i)=>{
+
+    input.addEventListener('focus',(event)=>{
+
+        const championList = championSearchLists[i];
+
+        championList.classList.remove('hidden');
+
+    });
+
+    input.addEventListener('input',(event)=>{
+
+        const inputText = event.target.value.toLowerCase();
+        
+        const championList = championSearchLists[i];
+        const championItems = championList.querySelectorAll('.champion-item');
+
+
+        championItems.forEach(item=>{
+
+            const championName = item.querySelector('.champion-name').innerText.toLowerCase();
+
+            if(championName.includes(inputText)){
+
+                item.classList.remove('hidden');
+
+            } else{
+
+                item.classList.add('hidden');
+            }
+        });
+    });
+
+    input.addEventListener('blur',(event)=>{
+
+        const championList = championSearchLists[i];
+
+        championList.classList.add('hidden');
+
+    })
 });
