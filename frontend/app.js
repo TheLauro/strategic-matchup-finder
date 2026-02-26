@@ -83,3 +83,25 @@ championSearchInputs.forEach((input,i)=>{
 
     })
 });
+
+
+/*Implement dynamic lane filter*/
+const laneSearchSelectors = document.querySelectorAll('.select-lane-icon');
+
+laneSearchSelectors.forEach(button=>{
+
+    button.addEventListener('click',(event)=>{
+
+        laneSearchSelectors.forEach(anotherButton=>{
+
+            anotherButton.classList.remove('select-lane-icon-click');
+        });
+
+        button.classList.add('select-lane-icon-click');
+    });
+});
+
+
+
+
+

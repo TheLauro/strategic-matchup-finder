@@ -246,13 +246,20 @@ ul::-webkit-scrollbar-thumb:hover{
 
     height: 45px;
     transition: background-color 100ms;
+    border: 1px solid transparent;
 
 }
 
 .select-lane-icon:hover{
 
     cursor: pointer;
-    background-color: #1c273a
+    background-color: rgba(145, 143, 143, 0.4);
+}
+
+.select-lane-icon-click{
+    
+    background-color: rgba(145, 143, 143, 0.4);
+    border: 1px solid rgba(200, 171, 113, 0.914);
 }
 
 #pool-select-overlay{
