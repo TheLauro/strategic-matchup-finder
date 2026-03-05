@@ -3,6 +3,7 @@ package com.github.thelauro.matchupfinder.controller;
 import com.github.thelauro.matchupfinder.dto.AddChampionOnPullDTO;
 import com.github.thelauro.matchupfinder.dto.ChampionDTO;
 import com.github.thelauro.matchupfinder.dto.UserDTO;
+import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,9 @@ public class UserController {
     }
 
     @GetMapping("/me/pool")
-    public List<ChampionDTO> getUserPool(){
-        return userService.getUserPool();
+    public List<ChampionDTO> getUserPool(@RequestParam Lane lane){
+
+        return userService.getUserPool(lane);
     }
 
     @PostMapping("/me/pool")

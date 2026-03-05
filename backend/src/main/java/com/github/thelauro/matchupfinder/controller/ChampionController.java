@@ -1,6 +1,7 @@
 package com.github.thelauro.matchupfinder.controller;
 
 import com.github.thelauro.matchupfinder.dto.ChampionDTO;
+import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.service.ChampionService;
 import com.github.thelauro.matchupfinder.service.ScrapperService;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,14 @@ public class ChampionController {
     }
 
     @GetMapping
-    public List<ChampionDTO> getAllChampions(){
-        return championService.getAllChampions();
+    public List<ChampionDTO> getChampions(@RequestParam(required = false) Lane lane){
+
+        if(lane!=null) {
+            return championService.getChampionByMostCommonLane(lane);
+
+        } else{
+            return championService.getAllChampions();
+        }
     }
 
     @GetMapping("/{id}")
