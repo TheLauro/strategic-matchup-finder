@@ -128,27 +128,7 @@
         </div>
 
         <ul id="pool-modal-list" class="user-lane-pool-list"> 
-        
-            <li class="pool-champion selected">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Aatrox_0.jpg" alt="Aatrox Splash Art">
-                <span class="pool-champion-name">Aatrox</span>
-            </li>
-            <li class="pool-champion selected">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Ornn_0.jpg" alt="Ornn Splash Art">
-                <span class="pool-champion-name">Ornn</span>
-            </li> 
-            <li class="pool-champion selected">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Pantheon_0.jpg" alt="Pantheon Splash Art">
-                <span class="pool-champion-name">Pantheon</span>
-            </li>        
-            <li class="pool-champion selected">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Volibear_0.jpg" alt="Volibear Splash Art">
-                <span class="pool-champion-name">Volibear</span>
-            </li>
-            <li class="pool-champion selected">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Yone_0.jpg" alt="Yone Splash Art">
-                <span class="pool-champion-name">Yone</span>
-            </li>             
+                     
         </ul>      
         </div>
 
@@ -187,75 +167,48 @@
                         <line x1="24" y1="24" x2="17" y2="17.2"></line>               
                         </svg>
 
-                    <input type="text" placeholder="Busque seu campeão...">
+                    <input class="pool-option-search-input" type="text" placeholder="Busque seu campeão...">
 
                     </div>
             </div>
 
+            
+
             </div>
 
         <ul id="options-modal-list" class="lane-options-pool-list"> 
-        
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Darius_0.jpg" alt="Darius Splash Art">
-                <span class="pool-champion-name">Darius</span>
-            </li>
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Jax_0.jpg" alt="Jax Splash Art">
-                <span class="pool-champion-name">Jax</span>
-            </li>
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Mordekaiser_0.jpg" alt="Mordekaiser Splash Art">
-                <span class="pool-champion-name">Mordekaiser</span>
-            </li> 
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Poppy_0.jpg" alt="Poppy Splash Art">
-                <span class="pool-champion-name">Poppy</span>
-            </li>
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Garen_0.jpg" alt="Garen Splash Art">
-                <span class="pool-champion-name">Garen</span>
-            </li>
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Kennen_0.jpg" alt="Kennen Splash Art">
-                <span class="pool-champion-name">Kennen</span>
-            </li> 
-            <li class="pool-champion option">
-                <img src="https://static.bigbrain.gg/assets/lol/riot_static/16.3.1/img/splash/Kled_0.jpg" alt="Kled Splash Art">
-                <span class="pool-champion-name">Kled</span>
-            </li> 
              
         </ul>
 
         </div>
 
-        <div id="confimartion-modal "class="pool-window-confirmation hidden">
-            <h2 class="conf-msg">
+        <div id="confirmation-modal"class="pool-window-confirmation hidden">
+            <h2 id="add-msg" class="conf-msg">
                 Deseja adicionar
-                <span id="conf-champ-name" class="highlight-white">Darius</span> 
+                <span id="add-champ-name" class="highlight-white">Darius</span> 
                 em sua pool
-                <span id="conf-prep">do</span>
-                <span id="conf-lane-name" class="highlight-white">Top?</span>
+                <span id="add-prep">do</span>
+                <span id="add-lane-name" class="highlight-white">Top?</span>
             </h2>
 
             <div class="pool-select-confirmation-actions">
-                <button class="clean-btn action-button">Cancelar</button>
-                <button class="clean-btn action-button">Confirmar</button>
+                <button id="add-cancel" class="clean-btn action-button">Cancelar</button>
+                <button id="add-conf" class="clean-btn action-button">Confirmar</button>
             </div> 
         </div>
 
         <div id="delete-modal" class="pool-window-confirmation hidden">
-            <h2 class="conf-msg">
+            <h2 id="delete-msg" class="conf-msg">
                 Deseja remover
-                <span id="conf-champ-name" class="highlight-white">Ornn</span> 
+                <span id="delete-champ-name" class="highlight-white">Ornn</span> 
                 de sua pool
-                <span id="conf-prep">do</span>
-                <span id="conf-lane-name" class="highlight-white">Top?</span>
+                <span id="delete-prep">do</span>
+                <span id="delete-lane-name" class="highlight-white">Top?</span>
             </h2>
 
             <div class="pool-delete-confirmation-actions">
-                <button class="clean-btn action-button">Cancelar</button>
-                <button class="clean-btn action-button">Confirmar</button>
+                <button id="delete-cancel" class="clean-btn action-button">Cancelar</button>
+                <button id="delete-conf" class="clean-btn action-button">Confirmar</button>
             </div>
 
         </div>

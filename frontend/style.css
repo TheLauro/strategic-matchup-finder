@@ -302,12 +302,17 @@ ul::-webkit-scrollbar-thumb:hover{
     margin-top: 1%;
 }
 
+#exit-pool-selection:hover{
+    cursor: pointer;
+}
+
 .pool-selected-container{
 
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+    width: 50%;
 
 }
 
@@ -354,7 +359,7 @@ ul::-webkit-scrollbar-thumb:hover{
 
     display: grid;
     align-content: start;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     list-style: none;
     row-gap: 40px;
@@ -362,13 +367,29 @@ ul::-webkit-scrollbar-thumb:hover{
     padding: 0;
     padding-inline: 10px;
     margin-bottom: 0;
+    margin-left: 5px;
 
     flex: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
 
     max-width: 100%;
-    overflow-x: hidden;
-       
+    overflow-x: hidden;       
+}
+
+.loading-icon{
+
+    grid-column: 1/-1; 
+    margin-left: 37%;
+    margin-top: 150px;
+
+    animation: rotate-loading 0.65s linear infinite;
+
+}
+
+.pool-champion{
+
+    height: 161px;
+    
 }
 
 .pool-champion:hover{
@@ -417,6 +438,7 @@ ul::-webkit-scrollbar-thumb:hover{
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+    width: 50%;
 }
 
 .pool-option-header{
@@ -463,7 +485,7 @@ ul::-webkit-scrollbar-thumb:hover{
     pointer-events: none; 
 }
 
-.pool-option-search input{
+.pool-option-search-input{
 
     border: none;
     background-color: transparent;
@@ -485,7 +507,7 @@ ul::-webkit-scrollbar-thumb:hover{
 
     display: grid;
     align-content: start;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     row-gap: 40px; 
     list-style: none;
@@ -494,10 +516,11 @@ ul::-webkit-scrollbar-thumb:hover{
     left:0;
     padding: 0;
     padding-inline: 10px;
+    margin-left: 5px;
     margin-bottom: 0;
     
     flex: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
 
     max-width: 100%;
     overflow-x: hidden;
@@ -506,6 +529,7 @@ ul::-webkit-scrollbar-thumb:hover{
 .pool-window-confirmation{
 
     position: absolute;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -747,5 +771,11 @@ ul::-webkit-scrollbar-thumb:hover{
 
     font-size: medium;
     
+}
+
+@keyframes rotate-loading {
+    
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
 }
 
