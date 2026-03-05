@@ -5,14 +5,12 @@ import com.github.thelauro.matchupfinder.model.Champion;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.repository.ChampionRepository;
 import com.github.thelauro.matchupfinder.repository.MatchupRepository;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ChampionService {
@@ -26,7 +24,7 @@ public class ChampionService {
     }
 
     public List<ChampionDTO> getAllChampions(){
-        return championRepository.findAll().stream().map(ChampionDTO::new).toList();
+        return championRepository.findAllByOrderByNameAsc().stream().map(ChampionDTO::new).toList();
     }
 
     public ChampionDTO getChampion(Long id){

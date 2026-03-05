@@ -2,6 +2,7 @@ package com.github.thelauro.matchupfinder.repository;
 
 import com.github.thelauro.matchupfinder.model.Champion;
 import com.github.thelauro.matchupfinder.model.User;
+import com.github.thelauro.matchupfinder.model.enums.Lane;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
         SELECT champ.* FROM champion champ
         INNER JOIN user_champions pools ON champ.id = pools.champion_id
         WHERE pools.user_id = :userId AND champ.most_common_lane = :lane
+        ORDER BY champ.name ASC 
         """, nativeQuery = true)
     public List<Champion> findUserPool(@Param("userId") Long userId, @Param("lane") String lane);
 
