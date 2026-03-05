@@ -27,7 +27,13 @@ public class User {
     @JoinTable(
         name = "user_champions",
         joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "champion_id")
+        inverseJoinColumns = @JoinColumn(name = "champion_id"),
+            uniqueConstraints = {
+                    @UniqueConstraint(
+                            name = "uniqueChampion",
+                            columnNames = {"user_id", "champion_id"}
+                    )
+            }
     )
     private List<Champion> userChampions = new ArrayList<>();
 
