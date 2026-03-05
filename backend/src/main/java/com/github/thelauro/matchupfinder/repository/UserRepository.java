@@ -15,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = """
         SELECT champ.* FROM champion champ
         INNER JOIN user_champions pools ON champ.id = pools.champion_id
-        WHERE pools.user_id = :userId
+        WHERE pools.user_id = :userId AND champ.most_common_lane = :lane
         """, nativeQuery = true)
-    public List<Champion> findUserPool(@Param("userId") Long userId);
+    public List<Champion> findUserPool(@Param("userId") Long userId, @Param("lane") String lane);
 
     @Modifying
     @Transactional

@@ -4,6 +4,7 @@ import com.github.thelauro.matchupfinder.dto.ChampionDTO;
 import com.github.thelauro.matchupfinder.dto.UserDTO;
 import com.github.thelauro.matchupfinder.model.Champion;
 import com.github.thelauro.matchupfinder.model.User;
+import com.github.thelauro.matchupfinder.model.enums.Lane;
 import com.github.thelauro.matchupfinder.repository.ChampionRepository;
 import com.github.thelauro.matchupfinder.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -26,8 +27,8 @@ public class UserService {
         this.championRepository = championRepository;
     }
 
-    public List<ChampionDTO> getUserPool(){
-        return userRepository.findUserPool(DEFAULT_USER_ID).stream().map(ChampionDTO::new).toList();
+    public List<ChampionDTO> getUserPool(Lane lane){
+        return userRepository.findUserPool(DEFAULT_USER_ID, lane.name()).stream().map(ChampionDTO::new).toList();
     }
 
     public void insertChampionOnPool(Long championId){

@@ -34,6 +34,11 @@ public class ChampionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campeão não encontrado"));
     }
 
+    public List<ChampionDTO> getChampionByMostCommonLane(Lane lane){
+
+        return championRepository.findAllByMostCommonLaneOrderByNameAsc(lane).stream().map(ChampionDTO::new).toList();
+    }
+
 
     @Modifying
     public void updateChampionsCommonLane(){
