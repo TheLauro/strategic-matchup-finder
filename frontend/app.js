@@ -45,12 +45,50 @@ closeSelectWindowButton.addEventListener('click', (event) => {
 const championSearchInputs = document.querySelectorAll('.champion-search-input');
 const championSearchLists = document.querySelectorAll('.champion-list');
 
+async function loadAllLists(){
+
+    const urlChampions = `http://localhost:8080/champions`
+
+    try{
+
+        const reqChampions = await fetch(urlChampions);
+
+        const champions = await reqChampions.json();
+
+        renderListsOptions(champions);
+
+    } catch(error){
+
+        console.log(error);
+    }
+    
+}
+
+function renderListsOptions(champions){
+
+    championSearchLists.forEach(list =>{
+        
+        champions.forEach(item=>{
+
+            const championItem = `
+                    <li class="champion-item">
+                        <img src="${item.iconUrl}" alt="${item.name}">
+                        <span class="champion-name">${item.name}</span>
+                    </li>`;
+
+            list.insertAdjacentHTML('beforeend',championItem);
+        });
+
+    });
+}
+
+loadAllLists();
+
 championSearchInputs.forEach((input, i) => {
 
     input.addEventListener('focus', (event) => {
 
         const championList = championSearchLists[i];
-
         championList.classList.remove('hidden');
 
     });
