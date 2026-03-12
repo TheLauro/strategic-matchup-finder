@@ -22,8 +22,9 @@ public interface MatchupRepository extends JpaRepository<Matchup, Long> {
         where c.id = :myChampionId 
         and e.id = :enemyChampionId
         and m.lane = :lane
+        order by m.winRate desc
 """)
-    Optional<Matchup> findByMyChampionIdAndEnemyChampionIdAndLane(
+    Optional<Matchup> findByMyChampionIdAndEnemyChampionIdAndLaneOrderByWinRateDesc(
             @Param("myChampionId")Long myChampionId,
             @Param("enemyChampionId")Long enemyChampionId,
             @Param("lane")Lane lane);
