@@ -130,21 +130,83 @@ championSearchInputs.forEach((input, i) => {
 
 
 /*Implement dynamic lane filter*/
-const laneSearchSelectors = document.querySelectorAll('.select-lane-icon');
+const homeLaneSearchSelectors = document.querySelectorAll('.select-home-lane-icon');
 
-laneSearchSelectors.forEach(button => {
+let laneFilter = null;
+
+homeLaneSearchSelectors.forEach((button, i) => {
 
     button.addEventListener('click', (event) => {
 
-        laneSearchSelectors.forEach(anotherButton => {
+        homeLaneSearchSelectors.forEach(anotherButton => {
 
             anotherButton.classList.remove('select-lane-icon-click');
         });
 
         button.classList.add('select-lane-icon-click');
+        laneFilter = lanes[i];
     });
 });
 
+
+const homeScreen = document.getElementById('screen-home');
+const resultScreen = document.getElementById('screen-results');
+const resultTitle = document.getElementById('results-title');
+const resultInput = document.getElementById('result-search-input');
+const resultLaneSearchSelectors = document.querySelectorAll('.select-result-lane-icon');
+
+let enemyChampion;
+
+championSearchLists.forEach(list => {
+
+    list.addEventListener('mousedown', event => {
+
+        const championItem = event.target.closest('.champion-item');
+
+        if (!championItem) return;
+
+        const body = document.body;
+
+        const splashUrl = championItem.dataset.splash
+
+        if (!laneFilter) {
+            laneFilter = championItem.dataset.lane;
+        }
+
+        const lane = Lane[laneFilter];
+
+        const name = championItem.dataset.name;
+
+        body.style.setProperty('--champion-background', `url('${splashUrl}')`);
+
+        resultInput.value = name;
+
+        homeScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+
+        body.classList.remove('home');
+        body.classList.add('result');
+
+        resultTitle.textContent = `Counters de ${name} ${lane}`;
+
+        enemyChampion = championItem;
+        loadEnemyMatchups();
+
+        resultLaneSearchSelectors.forEach(button => {
+
+            button.classList.remove('select-lane-icon-click');
+        });
+
+        resultLaneSearchSelectors.forEach((button, i) => {
+
+            if (laneFilter === lanes[i]) {
+                button.classList.add('select-lane-icon-click');
+            }
+
+        });
+        laneFilter = null;
+    });
+});
 
 
 const optionsContainer = document.getElementById('options-modal-list');
