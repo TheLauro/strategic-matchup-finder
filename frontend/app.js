@@ -118,7 +118,7 @@ championSearchInputs.forEach((input, i) => {
         championList.classList.remove('hidden');
 
         refreshLists(event, i);
-        
+
     });
 
     input.addEventListener('input', event=>{
@@ -615,6 +615,9 @@ async function loadEnemyMatchups() {
 
         const otherMatchups = matchups.filter(matchup => (!poolIds.includes(matchup.myChampion.id)));
         const poolMatchups = matchups.filter(matchup => (poolIds.includes(matchup.myChampion.id)));
+
+        otherMatchups.sort((a, b) => b.winRate - a.winRate);
+        poolMatchups.sort((a, b) => b.winRate - a.winRate);
 
         renderEnemyMatchups(otherMatchups, poolMatchups);
 
