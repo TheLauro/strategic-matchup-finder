@@ -1,4 +1,6 @@
 package com.github.thelauro.matchupfinder.dto;
 
-public record AddChampionOnPullDTO(Long championId) {
+import com.github.thelauro.matchupfinder.model.enums.Lane;
+
+public record AddChampionOnPullDTO(Long championId, Lane lane) {
 }
