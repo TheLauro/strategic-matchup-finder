@@ -87,36 +87,68 @@ function renderListsOptions(champions) {
 
 loadAllLists();
 
+function refreshLists(event,i) {
+
+    const inputText = event.target.value.toLowerCase();
+
+    const championList = championSearchLists[i];
+    const championItems = championList.querySelectorAll('.champion-item');
+
+
+    championItems.forEach(item => {
+
+        const championName = item.querySelector('.champion-name').innerText.toLowerCase();
+
+        if (championName.startsWith(inputText)) {
+
+            item.classList.remove('hidden');
+
+        } else {
+
+            item.classList.add('hidden');
+        }
+    });
+}
+
 championSearchInputs.forEach((input, i) => {
 
-    input.addEventListener('focus', (event) => {
+    input.addEventListener('focus', event => {
 
         const championList = championSearchLists[i];
         championList.classList.remove('hidden');
 
+        refreshLists(event, i);
+        
     });
 
-    input.addEventListener('input', (event) => {
+    input.addEventListener('input', event=>{
 
-        const inputText = event.target.value.toLowerCase();
+        refreshLists(event, i);
+    });
 
-        const championList = championSearchLists[i];
-        const championItems = championList.querySelectorAll('.champion-item');
+    input.addEventListener('keydown', event => {
 
+        if (event.key === 'Enter') {
+            event.preventDefault();
 
-        championItems.forEach(item => {
+            const championList = championSearchLists[i];
 
-            const championName = item.querySelector('.champion-name').innerText.toLowerCase();
+            const championVisible = championList.querySelector('.champion-item:not(.hidden)');
 
-            if (championName.startsWith(inputText)) {
+            if (championVisible) {
 
-                item.classList.remove('hidden');
+                const fakeClick = new MouseEvent('mousedown', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
 
-            } else {
-
-                item.classList.add('hidden');
+                championVisible.dispatchEvent(fakeClick);
             }
-        });
+
+            input.blur();
+        }
+
     });
 
     input.addEventListener('blur', (event) => {
