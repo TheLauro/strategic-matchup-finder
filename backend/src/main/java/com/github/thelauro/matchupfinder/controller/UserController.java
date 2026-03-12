@@ -4,6 +4,7 @@ import com.github.thelauro.matchupfinder.dto.AddChampionOnPullDTO;
 import com.github.thelauro.matchupfinder.dto.ChampionDTO;
 import com.github.thelauro.matchupfinder.dto.UserDTO;
 import com.github.thelauro.matchupfinder.model.enums.Lane;
+import com.github.thelauro.matchupfinder.service.UserChampionService;
 import com.github.thelauro.matchupfinder.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserChampionService userChampionService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserChampionService userChampionService) {
         this.userService = userService;
+        this.userChampionService = userChampionService;
     }
 
     @GetMapping
@@ -38,16 +41,16 @@ public class UserController {
     @GetMapping("/me/pool")
     public List<ChampionDTO> getUserPool(@RequestParam Lane lane){
 
-        return userService.getUserPool(lane);
+        return userChampionService.getUserPool(lane);
     }
 
     @PostMapping("/me/pool")
     public void insertChampionOnPool(@RequestBody AddChampionOnPullDTO input){
-        userService.insertChampionOnPool(input.championId());
+        userChampionService.insertChampionOnPool(input.championId(), input.lane());
     }
 
-    @DeleteMapping("/me/pool/{id}")
-    public void removeChampionOnPool (@PathVariable Long id){
-        userService.removeChampionFromPool(id);
+    @DeleteMapping("/me/pool")
+    public void removeChampionOnPool (@RequestParam Long championId, @RequestParam Lane lane){
+        userChampionService.removeChampionFromPool(championId, lane);
     }
 }

@@ -21,21 +21,7 @@ public class User {
     @EqualsAndHashCode.Include
     private Long id;
     private String name;
-
-    @ToString.Exclude
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "user_champions",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "champion_id"),
-            uniqueConstraints = {
-                    @UniqueConstraint(
-                            name = "uniqueChampion",
-                            columnNames = {"user_id", "champion_id"}
-                    )
-            }
-    )
-    private List<Champion> userChampions = new ArrayList<>();
+    private String email;
 
     public User(Long id, String name) {
         this.id = id;
