@@ -26,7 +26,7 @@ public class MatchupService {
     }
 
     public MatchupOutputDTO getMatchup(Long heroId, Long enemyId, Lane lane){
-        return matchupRepository.findByMyChampionIdAndEnemyChampionIdAndLane(heroId,enemyId,lane).map(MatchupOutputDTO::new)
+        return matchupRepository.findByMyChampionIdAndEnemyChampionIdAndLaneOrderByWinRateDesc(heroId,enemyId,lane).map(MatchupOutputDTO::new)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matchup não encontrada, dados insuficientes"));
     }
 
