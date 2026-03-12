@@ -518,7 +518,31 @@ poolSearchInput.addEventListener('input', event =>{
 });
 
 
+/*Result window scripts*/
 
+const resultLaneButtons = document.querySelectorAll('.pool-results-lane-icon');
+
+resultLaneButtons.forEach((button, i) => {
+
+
+    button.addEventListener('click', (event) => {
+
+        const laneKey = lanes[i];
+
+        poolWindowView.innerHTML = ``;
+
+        poolWindowView.innerHTML = `
+        <img id="lane-image" src="assets/lanes/${laneKey.toLowerCase()}.png" alt="${Lane[laneKey]} Lane">
+        <span id="lane-name">${Lane[laneKey]}</span>
+        `;
+
+        loadAllChampions(laneKey);
+
+        poolSelectWindow.classList.remove('hidden');
+        laneOpen = lanes[i];
+
+    });
+});
 
 
 

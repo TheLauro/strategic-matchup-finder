@@ -672,8 +672,15 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .pool-results-lane-icon{
 
-    padding: 5px;
+    padding: 0px;
+    margin-right: 10px;
 
+}
+
+.lane-name{
+
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 .result-columns{
