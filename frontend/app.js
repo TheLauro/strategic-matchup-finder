@@ -13,6 +13,8 @@ const poolSelectWindow = document.getElementById('pool-select-overlay');
 const poolWindowView = document.getElementById('pool-lane-view');
 const closeSelectWindowButton = document.getElementById('exit-pool-selection');
 
+let laneOpen = null;
+
 homeLaneButtons.forEach((button, i) => {
 
 
@@ -30,6 +32,7 @@ homeLaneButtons.forEach((button, i) => {
         loadAllChampions(laneKey);
 
         poolSelectWindow.classList.remove('hidden');
+        laneOpen = lanes[i];
 
     });
 });
@@ -38,7 +41,7 @@ closeSelectWindowButton.addEventListener('click', (event) => {
     
     poolSelectWindow.classList.add('hidden');
     poolSearchInput.value = "";
-
+    laneOpen = null;
 });
 
 /*Implement dynamic champion search list*/
@@ -146,6 +149,7 @@ laneSearchSelectors.forEach(button => {
 
 const optionsContainer = document.getElementById('options-modal-list');
 const poolContainer = document.getElementById('pool-modal-list');
+let cacheAll = null;
 
 async function loadAllChampions(lane) {
 
@@ -170,17 +174,20 @@ async function loadAllChampions(lane) {
                                 </svg>`;
 
     
-    const urlAll = `http://localhost:8080/champions?lane=${lane}`
+    const urlAll = `http://localhost:8080/champions`
     const urlPool = `http://localhost:8080/users/me/pool?lane=${lane}`
 
     try {
 
-        const [reqAll, reqPool] = await Promise.all([
-            fetch(urlAll),
+        const [allChampions, reqPool] = await Promise.all([
+            cacheAll ? Promise.resolve(cacheAll) : fetch(urlAll).then(req => req.json()),
             fetch(urlPool)
         ]);
 
-        const allChampions = await reqAll.json();
+        if (!cacheAll) {
+            cacheAll = allChampions;
+        }
+
         const poolChampions = await reqPool.json();
 
         const poolIds = poolChampions.map(champion => champion.id);
@@ -246,13 +253,12 @@ optionsContainer.addEventListener('click', event => {
     optionId = optionChampion.dataset.id;
 
     const optionName = optionChampion.dataset.name;
-    const optionLane = optionChampion.dataset.lane;
 
     const messageName = document.getElementById('add-champ-name');
     messageName.textContent = optionName;
 
     const messageLane = document.getElementById('add-lane-name');
-    messageLane.textContent = Lane[optionLane];
+    messageLane.textContent = Lane[laneOpen];
 
     const messagePrep = document.getElementById('add-prep');
 
@@ -266,9 +272,6 @@ optionsContainer.addEventListener('click', event => {
     messageLane.textContent += '?';
 
     addConfirmationWindow.classList.remove('hidden');
-
-    console.log(`CLicou no id: ${optionId}`);
-    console.log("Fotinha: ", optionChampion);
 });
 
 const addConfirmationButton = document.getElementById('add-conf');
@@ -298,23 +301,26 @@ addConfirmationButton.addEventListener('click', async event => {
     optionChampion.classList.add('selected');
     addConfirmationWindow.classList.add('hidden');
 
-        try{
+    try {
 
-            const addOnPool = await fetch('http://localhost:8080/users/me/pool',{
+        const addOnPool = await fetch('http://localhost:8080/users/me/pool', {
 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({championId: parseInt(optionId)})
+            body: JSON.stringify({
+                championId: parseInt(optionId),
+                lane: laneOpen
+            })
             });
 
-            if(!addOnPool.ok){
+        if (!addOnPool.ok) {
 
                 throw new Error('O Java nao conseguiu adicionar na pool');
             }
 
-        } catch(error){
+    } catch (error) {
 
             console.error("Erro ao salvar no banco:", error);
 
@@ -353,7 +359,7 @@ poolContainer.addEventListener('click', event =>{
     messageName.textContent = optionName;
 
     const messageLane = document.getElementById('delete-lane-name');
-    messageLane.textContent = Lane[optionLane];
+    messageLane.textContent = Lane[laneOpen];
     
     const messagePrep = document.getElementById('delete-prep');
     
@@ -400,18 +406,18 @@ removeConfirmationButton.addEventListener('click', async event =>{
     optionChampion.classList.add('option');
     removeConfirmationWindow.classList.add('hidden');
 
-    try{
+    try {
 
-        const removeFromPool = fetch(`http://localhost:8080/users/me/pool/${optionId}`,{
+        const removeFromPool = fetch(`http://localhost:8080/users/me/pool?championId=${optionId}&lane=${laneOpen}`, {
 
             method: 'DELETE'
         });
 
-        if(!removeFromPool.ok){
+        if (!removeFromPool.ok) {
             throw new Error('O Java tankou o delete não');
         }
 
-    } catch(error){
+    } catch (error) {
 
         console.error("Deu ruim ai campeao", error);
     }
