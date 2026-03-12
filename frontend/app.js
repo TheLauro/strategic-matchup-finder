@@ -38,7 +38,7 @@ homeLaneButtons.forEach((button, i) => {
 });
 
 closeSelectWindowButton.addEventListener('click', (event) => {
-    
+
     poolSelectWindow.classList.add('hidden');
     poolSearchInput.value = "";
     laneOpen = null;
@@ -48,11 +48,11 @@ closeSelectWindowButton.addEventListener('click', (event) => {
 const championSearchInputs = document.querySelectorAll('.champion-search-input');
 const championSearchLists = document.querySelectorAll('.champion-list');
 
-async function loadAllLists(){
+async function loadAllLists() {
 
     const urlChampions = `http://localhost:8080/champions`
 
-    try{
+    try {
 
         const reqChampions = await fetch(urlChampions);
 
@@ -60,26 +60,26 @@ async function loadAllLists(){
 
         renderListsOptions(champions);
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
     }
-    
+
 }
 
-function renderListsOptions(champions){
+function renderListsOptions(champions) {
 
-    championSearchLists.forEach(list =>{
-        
-        champions.forEach(item=>{
+    championSearchLists.forEach(list => {
+
+        champions.forEach(item => {
 
             const championItem = `
-                    <li class="champion-item">
+                    <li data-id="${item.id}" data-name ="${item.name}" data-lane="${item.mostCommonLane}" data-icon="${item.iconUrl}" data-splash="${item.splashArtUrl}" class="champion-item">
                         <img src="${item.iconUrl}" alt="${item.name}">
                         <span class="champion-name">${item.name}</span>
                     </li>`;
 
-            list.insertAdjacentHTML('beforeend',championItem);
+            list.insertAdjacentHTML('beforeend', championItem);
         });
 
     });
@@ -235,7 +235,7 @@ async function loadAllChampions(lane) {
                                     <path d="M12 18a2 2 0 1 0 0 4 2 2 0 1 0 0-4m0-16a2 2 0 1 0 0 4 2 2 0 1 0 0-4M7.76 19.07c-.78.78-2.05.78-2.83 0s-.78-2.05 0-2.83 2.05-.78 2.83 0 .78 2.05 0 2.83M19.07 7.76c-.78.78-2.05.78-2.83 0s-.78-2.05 0-2.83 2.05-.78 2.83 0 .78 2.05 0 2.83M4 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2m16 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M4.93 7.76c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0 .78 2.05 0 2.83-2.05.78-2.83 0m11.31 11.31c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0 .78 2.05 0 2.83-2.05.78-2.83 0"></path>
                                 </svg>`;
 
-    
+
     const urlAll = `http://localhost:8080/champions`
     const urlPool = `http://localhost:8080/users/me/pool?lane=${lane}`
 
@@ -309,7 +309,7 @@ const addConfirmationWindow = document.getElementById('confirmation-modal');
 optionsContainer.addEventListener('click', event => {
 
     optionChampion = event.target.closest('.pool-champion.option');
-    
+
     if (!optionChampion) return;
 
     optionId = optionChampion.dataset.id;
@@ -343,16 +343,16 @@ addConfirmationButton.addEventListener('click', async event => {
     const optionName = optionChampion.dataset.name;
     const alreadySelecteds = Array.from(poolContainer.querySelectorAll('.pool-champion.selected'));
 
-    const nextChampion = alreadySelecteds.find(card =>{
+    const nextChampion = alreadySelecteds.find(card => {
 
         const champion = card.dataset.name;
 
         return champion.localeCompare(optionName) > 0;
     });
 
-    if(nextChampion){
+    if (nextChampion) {
 
-        poolContainer.insertBefore(optionChampion,nextChampion);
+        poolContainer.insertBefore(optionChampion, nextChampion);
 
     } else {
 
@@ -367,37 +367,37 @@ addConfirmationButton.addEventListener('click', async event => {
 
         const addOnPool = await fetch('http://localhost:8080/users/me/pool', {
 
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 championId: parseInt(optionId),
                 lane: laneOpen
             })
-            });
+        });
 
         if (!addOnPool.ok) {
 
-                throw new Error('O Java nao conseguiu adicionar na pool');
-            }
+            throw new Error('O Java nao conseguiu adicionar na pool');
+        }
 
     } catch (error) {
 
-            console.error("Erro ao salvar no banco:", error);
+        console.error("Erro ao salvar no banco:", error);
 
-            optionsContainer.appendChild(optionChampion);
-            optionChampion.classList.remove('selected');
-            optionChampion.classList.add('option');
-        }
+        optionsContainer.appendChild(optionChampion);
+        optionChampion.classList.remove('selected');
+        optionChampion.classList.add('option');
+    }
 
-        optionChampion = null;
-        optionId = null;
-    });
-    
+    optionChampion = null;
+    optionId = null;
+});
+
 const addCancelButton = document.getElementById('add-cancel');
 
-addCancelButton.addEventListener('click', event=>{
+addCancelButton.addEventListener('click', event => {
 
     addConfirmationWindow.classList.add('hidden');
     optionChampion = null;
@@ -406,25 +406,24 @@ addCancelButton.addEventListener('click', event=>{
 
 const removeConfirmationWindow = document.getElementById('delete-modal');
 
-poolContainer.addEventListener('click', event =>{
+poolContainer.addEventListener('click', event => {
 
     optionChampion = event.target.closest('.pool-champion.selected');
 
-    if(!optionChampion) return;
+    if (!optionChampion) return;
 
     optionId = optionChampion.dataset.id;
 
     const optionName = optionChampion.dataset.name;
-    const optionLane = optionChampion.dataset.lane;
 
     const messageName = document.getElementById('delete-champ-name');
     messageName.textContent = optionName;
 
     const messageLane = document.getElementById('delete-lane-name');
     messageLane.textContent = Lane[laneOpen];
-    
+
     const messagePrep = document.getElementById('delete-prep');
-    
+
     if (messageLane.textContent === 'Suporte' || messageLane.textContent === 'ADC') {
         messagePrep.textContent = 'de';
     } else if (messageLane.textContent === 'Jungle') {
@@ -437,28 +436,26 @@ poolContainer.addEventListener('click', event =>{
 
     removeConfirmationWindow.classList.remove('hidden');
 
-    console.log(`CLicou no id: ${optionId}`);
-    console.log("Fotinha: ", optionChampion);
 });
 
 const removeConfirmationButton = document.getElementById('delete-conf');
 
-removeConfirmationButton.addEventListener('click', async event =>{
+removeConfirmationButton.addEventListener('click', async event => {
 
     const optionName = optionChampion.dataset.name;
     const allOptions = Array.from(optionsContainer.querySelectorAll('.pool-champion.option'));
 
-    const nextChampion = allOptions.find(card =>{
+    const nextChampion = allOptions.find(card => {
 
         const champion = card.dataset.name;
 
         return champion.localeCompare(optionName) > 0;
     });
 
-    if(nextChampion){
+    if (nextChampion) {
 
-        optionsContainer.insertBefore(optionChampion,nextChampion);
-        
+        optionsContainer.insertBefore(optionChampion, nextChampion);
+
     } else {
 
         optionsContainer.appendChild(optionChampion);
@@ -487,7 +484,7 @@ removeConfirmationButton.addEventListener('click', async event =>{
 
 const removeCancelButton = document.getElementById('delete-cancel');
 
-removeCancelButton.addEventListener('click', event=>{
+removeCancelButton.addEventListener('click', event => {
 
     removeConfirmationWindow.classList.add('hidden');
     optionChampion = null;
@@ -496,17 +493,17 @@ removeCancelButton.addEventListener('click', event=>{
 
 const poolSearchInput = document.querySelector('.pool-option-search-input');
 
-poolSearchInput.addEventListener('input', event =>{
+poolSearchInput.addEventListener('input', event => {
 
     const inputText = event.target.value.toLowerCase();
 
     const optionItems = optionsContainer.querySelectorAll('.pool-champion.option');
 
-    optionItems.forEach(item=>{
+    optionItems.forEach(item => {
 
         const optionName = item.dataset.name.toLowerCase();
 
-        if(optionName.startsWith(inputText)){
+        if (optionName.startsWith(inputText)) {
 
             item.classList.remove('hidden');
 
