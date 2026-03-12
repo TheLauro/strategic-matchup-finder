@@ -109,32 +109,32 @@ private final ChampionRepository championRepository;
 
         Document matchup;
 
-        for(Champion champion : champions){
+        for(Champion enemy : champions){
 
-            String championName = champion.getName().replace(" ","").toLowerCase();
+            String enemyName = enemy.getName().replace(" ","").toLowerCase();
 
-            if(championName.equals("nunu&willump")){
+            if(enemyName.equals("nunu&willump")){
 
-                championName = "nunu";
+                enemyName = "nunu";
             }
 
-            if(championName.equals("renataglasc")){
-                championName = "renata";
+            if(enemyName.equals("renataglasc")){
+                enemyName = "renata";
             }
 
             for(String lane : lanes){
 
                 try{
 
-                    matchup = Jsoup.connect("https://u.gg/lol/champions/"+championName+"/counter?role="+lane)
+                    matchup = Jsoup.connect("https://u.gg/lol/champions/"+ enemyName +"/counter?role="+lane)
                             .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
                             .get();
 
-                    Elements enemies = matchup.select("div.truncate");
+                    Elements opps = matchup.select("div.truncate");
                     Elements winRates = matchup.select("div[class='text-[12px] font-bold leading-[15px] whitespace-nowrap text-right text-accent-blue-400']");
                     Elements gamesPlayeds = matchup.select("div[class='mt-[2px] text-accent-gray-100 text-[11px] font-normal whitespace-nowrap']");
 
-                    List<String> listOfEnemies = enemies.eachText();
+                    List<String> listOfOpps = opps.eachText();
                     List<Double> listOfWinRates = winRates.eachText().stream()
                             .map(text -> text.replace("% WR",""))
                             .map(Double::parseDouble).toList();
@@ -146,7 +146,7 @@ private final ChampionRepository championRepository;
 
                     Lane enumLane = Lane.valueOf(lane.toUpperCase());
 
-                    saveChampionMatchups(champion, enumLane, listOfEnemies, listOfWinRates, listOfGames);
+                    saveChampionMatchups(enemy, enumLane, listOfOpps, listOfWinRates, listOfGames);
 
                 } catch(IOException e){
                     e.printStackTrace();
@@ -160,18 +160,18 @@ private final ChampionRepository championRepository;
     }
 
     @Transactional
-    protected void saveChampionMatchups(Champion champion, Lane enumLane, List<String> enemies, List<Double> winRates, List<Integer> gamesPlayeds){
+    protected void saveChampionMatchups(Champion enemy, Lane enumLane, List<String> opps, List<Double> winRates, List<Integer> gamesPlayeds){
 
         List<Matchup> championMatchups = new ArrayList<>();
 
         for(int i = 0; i<winRates.size();i++){
 
-            Champion enemy = championRepository.findByName(enemies.get(i));
+            Champion opp = championRepository.findByName(opps.get(i));
 
-            Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(champion,enemy,enumLane)
+            Matchup newMatchup = matchupRepository.findByMyChampionAndEnemyChampionAndLane(opp, enemy,enumLane)
                     .orElseGet( ()->{
 
-                        return new Matchup(null,champion,enemy,enumLane,0.0,0,null);
+                        return new Matchup(null,opp, enemy,enumLane,0.0,0,null);
                     });
 
             newMatchup.setWinRate(winRates.get(i));
