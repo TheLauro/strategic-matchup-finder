@@ -545,6 +545,208 @@ resultLaneButtons.forEach((button, i) => {
 });
 
 
+resultLaneSearchSelectors.forEach((button, i) => {
+
+    button.addEventListener('click', (event) => {
+
+        resultLaneSearchSelectors.forEach(anotherButton => {
+
+            anotherButton.classList.remove('select-lane-icon-click');
+        });
+
+        button.classList.add('select-lane-icon-click');
+        laneFilter = lanes[i];
+        const lane = Lane[laneFilter];
+        const name = enemyChampion.dataset.name;
+
+        resultTitle.textContent = `Counters de ${name} ${lane}`;
+
+        loadEnemyMatchups()
+        laneFilter = null;
+    });
+});
+
+async function loadEnemyMatchups() {
+
+    let lane = laneFilter;
+    if (!laneFilter) lane = enemyChampion.dataset.lane;
+
+    const enemyId = enemyChampion.dataset.id;
+
+    try {
+
+        const [reqMatchups, reqPool] = await Promise.all([
+            fetch(`http://localhost:8080/matchups?enemyId=${enemyId}&lane=${lane}`),
+            fetch(`http://localhost:8080/users/me/pool?lane=${lane}`)
+        ]);
+
+        const matchups = await reqMatchups.json();
+        const pool = await reqPool.json();
+        const poolIds = pool.map(champion => champion.id);
+
+        const otherMatchups = matchups.filter(matchup => (!poolIds.includes(matchup.myChampion.id)));
+        const poolMatchups = matchups.filter(matchup => (poolIds.includes(matchup.myChampion.id)));
+
+        renderEnemyMatchups(otherMatchups, poolMatchups);
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+const poolColumn = document.getElementById('pool-column');
+const othersColumn = document.getElementById('others-column');
+
+function renderEnemyMatchups(otherMatchups, poolMatchups) {
+
+    poolColumn.innerHTML = '<h2>Sua pool</h2>';
+
+    poolMatchups.forEach(matchup => {
+
+        let poolCard;
+
+        if (matchup.winRate >= 50.0) {
+
+            poolCard = `<div class="column-card win">
+
+                        <div class="column-card-identifier">
+                        <img src="${matchup.myChampion.iconUrl}" alt="${matchup.myChampion.name}">
+                        <div class="column-card-name">${matchup.myChampion.name}</div>
+                        </div>
+
+                        <div class="column-card-icon">
+                            <svg  
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="100" 
+                            height="50"  
+                            fill="rgba(200, 171, 113, 0.914)" 
+                            viewBox="0 0 6 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M16.5 9c-2.11 0-3.99 1.2-4.91 3.05-.9-.09-1.78-.07-2.63.05a15.4 15.4 0 0 0-.13-3.37A3.49 3.49 0 0 0 11 5.5C11 3.57 9.43 2 7.5 2c-1.69 0-3.91.99-4.92 5.69C2 10.43 2 13.51 2 15v2c0 2.95 4.48 5 8.5 5 2.42 0 4.63-.74 6.03-2 3.02-.02 5.47-2.48 5.47-5.5S19.53 9 16.5 9m-.05 8.99h-.02c-.06 0-.13-.02-.2-.02l-.48-.04-.33.36C14.45 19.35 12.56 20 10.5 20 7.06 20 4 18.32 4 17v-2c0-1.42 0-4.36.54-6.89C5.12 5.39 6.12 4 7.5 4 8.33 4 9 4.67 9 5.5c0 .78-.62 1.44-1.41 1.49l-1.19.08.28 1.16c.2.84.31 1.8.31 2.78 0 .76-.06 1.5-.19 2.19l-.28 1.57 1.54-.43c1.24-.35 2.61-.43 3.99-.19l.86.15.26-.83c.46-1.47 1.8-2.45 3.32-2.45 1.93 0 3.5 1.57 3.5 3.5s-1.56 3.49-3.55 3.49Z">
+                            </path>
+                            </svg>
+                        </div>
+                    
+                        <div class="column-card-data">
+                            <div class="column-card-winrate">${matchup.winRate}% WR</div>
+                            <div class="column-card-games">${matchup.gamesPlayed} jogos</div>
+                        
+                        </div>
+                    
+                    </div>`;
+        } else {
+
+            poolCard = `<div class="column-card loss">
+
+                                <div class="column-card-identifier">
+                                <img src="${matchup.myChampion.iconUrl}" alt="${matchup.myChampion.name}">
+                                <div class="column-card-name">${matchup.myChampion.name}</div>
+                                </div>
+
+                            <div class="column-card-icon">
+                                <svg  
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="100" 
+                                height="50"  
+                                fill="rgba(200, 171, 113, 0.914)" 
+                                viewBox="0 0 6 24" >
+                                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                                <path d="M12 2C6.49 2 2 5.81 2 10.5c0 2.28 1.09 4.47 3 6.06V20c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.44c1.91-1.6 3-3.78 3-6.06C22 5.81 17.51 2 12 2m5.4 13.28c-.25.19-.4.49-.4.8V19h-2v-3h-2v3h-2v-3H9v3H7v-2.92a1 1 0 0 0-.4-.8C4.95 14.05 4 12.3 4 10.5 4 6.92 7.59 4 12 4s8 2.92 8 6.5c0 1.8-.95 3.54-2.6 4.78">
+                                </path>
+                                <path d="M8 8a2 2.5 0 1 0 0 5 2 2.5 0 1 0 0-5m8 0a2 2.5 0 1 0 0 5 2 2.5 0 1 0 0-5"></path>
+                                </svg>
+                            </div>
+                    
+                            <div class="column-card-data">
+                                <div class="column-card-winrate">${matchup.winRate}% WR</div>
+                                <div class="column-card-games">${matchup.gamesPlayed} jogos</div>
+                        
+                            </div>                    
+                            </div>`;
+        }
+
+        poolColumn.insertAdjacentHTML('beforeend', poolCard);
+
+    });
+
+    othersColumn.innerHTML = '<h2>Outros campeões</h2>';
+
+    otherMatchups.forEach(matchup => {
+
+        let othersCard;
+
+        if (matchup.winRate >= 50.0) {
+
+            othersCard = `<div class="column-card win">
+
+                        <div class="column-card-identifier">
+                        <img src="${matchup.myChampion.iconUrl}" alt="${matchup.myChampion.name}">
+                        <div class="column-card-name">${matchup.myChampion.name}</div>
+                        </div>
+
+                        <div class="column-card-icon">
+                            <svg  
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="100" 
+                            height="50"  
+                            fill="rgba(200, 171, 113, 0.914)" 
+                            viewBox="0 0 6 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M16.5 9c-2.11 0-3.99 1.2-4.91 3.05-.9-.09-1.78-.07-2.63.05a15.4 15.4 0 0 0-.13-3.37A3.49 3.49 0 0 0 11 5.5C11 3.57 9.43 2 7.5 2c-1.69 0-3.91.99-4.92 5.69C2 10.43 2 13.51 2 15v2c0 2.95 4.48 5 8.5 5 2.42 0 4.63-.74 6.03-2 3.02-.02 5.47-2.48 5.47-5.5S19.53 9 16.5 9m-.05 8.99h-.02c-.06 0-.13-.02-.2-.02l-.48-.04-.33.36C14.45 19.35 12.56 20 10.5 20 7.06 20 4 18.32 4 17v-2c0-1.42 0-4.36.54-6.89C5.12 5.39 6.12 4 7.5 4 8.33 4 9 4.67 9 5.5c0 .78-.62 1.44-1.41 1.49l-1.19.08.28 1.16c.2.84.31 1.8.31 2.78 0 .76-.06 1.5-.19 2.19l-.28 1.57 1.54-.43c1.24-.35 2.61-.43 3.99-.19l.86.15.26-.83c.46-1.47 1.8-2.45 3.32-2.45 1.93 0 3.5 1.57 3.5 3.5s-1.56 3.49-3.55 3.49Z">
+                            </path>
+                            </svg>
+                        </div>
+                    
+                        <div class="column-card-data">
+                            <div class="column-card-winrate">${matchup.winRate}% WR</div>
+                            <div class="column-card-games">${matchup.gamesPlayed} jogos</div>
+                        
+                        </div>
+                    
+                    </div>`;
+        } else {
+
+            othersCard = `<div class="column-card loss">
+
+                                <div class="column-card-identifier">
+                                <img src="${matchup.myChampion.iconUrl}" alt="${matchup.myChampion.name}">
+                                <div class="column-card-name">${matchup.myChampion.name}</div>
+                                </div>
+
+                            <div class="column-card-icon">
+                                <svg  
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="100" 
+                                height="50"  
+                                fill="rgba(200, 171, 113, 0.914)" 
+                                viewBox="0 0 6 24" >
+                                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                                <path d="M12 2C6.49 2 2 5.81 2 10.5c0 2.28 1.09 4.47 3 6.06V20c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.44c1.91-1.6 3-3.78 3-6.06C22 5.81 17.51 2 12 2m5.4 13.28c-.25.19-.4.49-.4.8V19h-2v-3h-2v3h-2v-3H9v3H7v-2.92a1 1 0 0 0-.4-.8C4.95 14.05 4 12.3 4 10.5 4 6.92 7.59 4 12 4s8 2.92 8 6.5c0 1.8-.95 3.54-2.6 4.78">
+                                </path>
+                                <path d="M8 8a2 2.5 0 1 0 0 5 2 2.5 0 1 0 0-5m8 0a2 2.5 0 1 0 0 5 2 2.5 0 1 0 0-5"></path>
+                                </svg>
+                            </div>
+                    
+                            <div class="column-card-data">
+                                <div class="column-card-winrate">${matchup.winRate}% WR</div>
+                                <div class="column-card-games">${matchup.gamesPlayed} jogos</div>
+                        
+                            </div>                    
+                            </div>`;
+        }
+
+        othersColumn.insertAdjacentHTML('beforeend', othersCard);
+
+    });
+}
+
+
+
+
+
 
 
 

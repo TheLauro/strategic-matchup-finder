@@ -555,7 +555,7 @@ ul::-webkit-scrollbar-thumb:hover{
 
 .highlight-white{
 
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .action-button{
@@ -621,7 +621,7 @@ ul::-webkit-scrollbar-thumb:hover{
     position: relative;
 }
 
-.results-title{
+#results-title{
 
     color: rgba(200, 171, 113, 0.914);
 }
@@ -663,6 +663,7 @@ ul::-webkit-scrollbar-thumb:hover{
 
     display: flex;
     justify-content: center;
+    z-index: 999;
 
     background-color: rgba(0,0,0,0.4);
     border: 1px solid rgba(200, 171, 113, 0.914);
