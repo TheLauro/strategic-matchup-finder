@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchup Finder Project</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body class="home">
+
+    <section id="screen-home" class="screen">
+
+    <h1 class="home-title">Matchup Finder Project</h1>
+    <br>
+    <h2>Selecione a sua pool</h2>
+
+    <div class="lanes-container">
+        <button class="clean-btn pool-lane-icon pool-home-lane-icon">
+            <img src="assets/lanes/top.png" alt="Top Lane">
+            <h3>Top</h3>
+        </button>
+        <button class="clean-btn pool-lane-icon pool-home-lane-icon">
+            <img src="assets/lanes/jungle.png" alt="Jungle">
+            <h3>Jungle</h3>
+        </button>
+        <button class="clean-btn pool-lane-icon pool-home-lane-icon">
+            <img src="assets/lanes/mid.png" alt="Mid Lane">
+            <h3>Mid</h3>
+        </button>
+        <button class="clean-btn pool-lane-icon pool-home-lane-icon">
+            <img src="assets/lanes/adc.png" alt="Adc">
+            <h3>ADC</h3>
+        </button>
+        <button class="clean-btn pool-lane-icon pool-home-lane-icon">
+            <img src="assets/lanes/support.png" alt="Suporte">
+            <h3>Suporte</h3>
+        </button>
+    </div>
+
+    
+    <div class="search-container">
+        
+        <div class="champion-search">
+            
+            <svg 
+                class="search-icon"
+                xlmns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+            <circle cx="12" cy="11" r="8"></circle>
+            <line x1="24" y1="24" x2="17" y2="17.2"></line>               
+            </svg>
+
+            <input class="champion-search-input" type="text" placeholder="Busque seu oponente..." autocomplete="off">
+            <ul class="champion-list hidden">
+            </ul>
+        </div>
+
+        <div class="search-separator"></div>
+
+        <div class="lane-select-container">
+            <button class="clean-btn select-lane-icon select-home-lane-icon">
+                <img src="assets/lanes/top.png" alt="Top Lane">
+            </button>
+            <button class="clean-btn select-lane-icon select-home-lane-icon">
+                <img src="assets/lanes/jungle.png" alt="Jungle">
+            </button>
+            <button class="clean-btn select-lane-icon select-home-lane-icon">
+                <img src="assets/lanes/mid.png" alt="Mid Lane">
+            </button>
+            <button class="clean-btn select-lane-icon select-home-lane-icon">
+                <img src="assets/lanes/adc.png" alt="Adc">
+            </button>
+            <button class="clean-btn select-lane-icon select-home-lane-icon">
+                <img src="assets/lanes/support.png" alt="Suporte">
+            </button>
+        </div>
+    </div>
+    </section>
+
+    <section id="pool-select-overlay" class="hidden">
+
+        <div class="lane-pool-container">
+
+        <div class="pool-selected-container">
+        
+        <div class="pool-select-header">
+            <h1 class="pool-select-title">Sua pool</h1>
+            <div id="pool-lane-view">
+            </div>
+            
+        </div>
+
+        <ul id="pool-modal-list" class="user-lane-pool-list"> 
+                     
+        </ul>      
+        </div>
+
+        <div class="pool-container-separator"></div>
+
+        <div class="pool-options-container">
+
+            <svg id="exit-pool-selection" xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24"  
+                fill="rgba(200, 171, 113, 0.914)" 
+                viewBox="0 0 24 24" >
+                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                <path d="m7.76 14.83-2.83 2.83 1.41 1.41 2.83-2.83 2.12-2.12.71-.71.71.71 1.41 1.42 3.54 3.53 1.41-1.41-3.53-3.54-1.42-1.41-.71-.71 5.66-5.66-1.41-1.41L12 10.59 6.34 4.93 4.93 6.34 10.59 12l-.71.71z"></path>
+            </svg>
+
+            <div class="pool-option-header">
+                <h1 class="pool-option-title">Disponíveis</h1>
+
+                <div class="pool-option-search-container">
+                    <div class="pool-option-search">
+
+                        <svg 
+                            class="pool-search-icon"
+                            xlmns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                        <circle cx="12" cy="11" r="8"></circle>
+                        <line x1="24" y1="24" x2="17" y2="17.2"></line>               
+                        </svg>
+
+                    <input class="pool-option-search-input" type="text" placeholder="Busque seu campeão..." autocomplete="off">
+
+                    </div>
+            </div>
+
+            
+
+            </div>
+
+        <ul id="options-modal-list" class="lane-options-pool-list"> 
+             
+        </ul>
+
+        </div>
+
+        <div id="confirmation-modal"class="pool-window-confirmation hidden">
+            <h2 id="add-msg" class="conf-msg">
+                Deseja adicionar
+                <span id="add-champ-name" class="highlight-white">Darius</span> 
+                em sua pool
+                <span id="add-prep">do</span>
+                <span id="add-lane-name" class="highlight-white">Top?</span>
+            </h2>
+
+            <div class="pool-select-confirmation-actions">
+                <button id="add-cancel" class="clean-btn action-button">Cancelar</button>
+                <button id="add-conf" class="clean-btn action-button">Confirmar</button>
+            </div> 
+        </div>
+
+        <div id="delete-modal" class="pool-window-confirmation hidden">
+            <h2 id="delete-msg" class="conf-msg">
+                Deseja remover
+                <span id="delete-champ-name" class="highlight-white">Ornn</span> 
+                de sua pool
+                <span id="delete-prep">do</span>
+                <span id="delete-lane-name" class="highlight-white">Top?</span>
+            </h2>
+
+            <div class="pool-delete-confirmation-actions">
+                <button id="delete-cancel" class="clean-btn action-button">Cancelar</button>
+                <button id="delete-conf" class="clean-btn action-button">Confirmar</button>
+            </div>
+
+        </div>
+        </div>
+
+    </section>
+
+    <section id="screen-results" class="screen hidden">
+
+        <div class="results-container">
+
+            <div>
+                <h1 id="results-title"></h1>
+            </div>
+
+            <div class="pool-icons-container">
+
+            <button class="clean-btn pool-lane-icon pool-results-lane-icon">
+                <img src="assets/lanes/top.png" alt="Top Lane">
+                <h2 class="lane-name">Top</h2>
+            </button>
+            <button class="clean-btn pool-lane-icon pool-results-lane-icon">
+                <img src="assets/lanes/jungle.png" alt="Jungle">
+                <h2 class="lane-name">Jungle</h2>
+            </button>
+            <button class="clean-btn pool-lane-icon pool-results-lane-icon">
+                <img src="assets/lanes/mid.png" alt="Mid Lane">
+                <h2 class="lane-name">Mid</h2>
+            </button>
+            <button class="clean-btn pool-lane-icon pool-results-lane-icon">
+                <img src="assets/lanes/adc.png" alt="Adc">
+                <h2 class="lane-name">ADC</h2>
+            </button>
+            <button class="clean-btn pool-lane-icon pool-results-lane-icon">
+                <img src="assets/lanes/support.png" alt="Suporte">
+                <h2 class="lane-name">Suporte</h2>
+            </button>
+
+            </div>
+
+        <div class="results-search-container add-blur">
+        
+        <div class="champion-search">
+            
+            <svg 
+                class="search-icon"
+                xlmns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+            <circle cx="12" cy="11" r="8"></circle>
+            <line x1="24" y1="24" x2="17" y2="17.2"></line>               
+            </svg>
+
+            <input id="result-search-input" class="champion-search-input"type="text" value="Volibear" placeholder="Busque seu oponente..." autocomplete="off">
+            <ul class="champion-list hidden add-blur">
+            </ul>
+        </div>
+
+        <div class="search-separator"></div>
+
+        <div class="lane-select-container add-blur">
+            <button class="clean-btn select-lane-icon select-result-lane-icon">
+                <img src="assets/lanes/top.png" alt="Top Lane">
+            </button>
+            <button class="clean-btn select-lane-icon select-result-lane-icon">
+                <img src="assets/lanes/jungle.png" alt="Jungle">
+            </button>
+            <button class="clean-btn select-lane-icon select-result-lane-icon">
+                <img src="assets/lanes/mid.png" alt="Mid Lane">
+            </button>
+            <button class="clean-btn select-lane-icon select-result-lane-icon">
+                <img src="assets/lanes/adc.png" alt="Adc">
+            </button>
+            <button class="clean-btn select-lane-icon select-result-lane-icon">
+                <img src="assets/lanes/support.png" alt="Suporte">
+            </button>
+        </div>
+        </div>
+
+        <div class="result-columns">
+
+            <div id="pool-column" class="column">
+
+            </div>
+
+            <div id="others-column" class="column">
+
+
+            </div>
+
+        </div>
+        
+    </div>
+    
+    </section>
+</body>
+</html>
