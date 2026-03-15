@@ -82,7 +82,12 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-_Note: When running the application for the first time, the `DatabaseSeeder` will automatically invoke the Scraper to populate the main champion tables._
+**Database Initialization (First Run):** Open another terminal and run the following `curl` commands to populate the data and create a dummy user:
+   * Scrape matchups (Takes ~40 mins): `curl -X POST http://localhost:8080/matchups/update`
+   * Update most common lanes: `curl -X PUT http://localhost:8080/champions`
+   * Create a dummy user: `curl -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"name\": \"test\", \"email\": \"test@gmail.com\"}"`
+
+_Note: When running the application for the first time, the `DatabaseSeeder` will automatically invoke the Scraper to populate the champions table._
 
 ### Running the Frontend
 

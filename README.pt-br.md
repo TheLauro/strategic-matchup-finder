@@ -82,7 +82,12 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-_Nota: Ao subir a aplicação pela primeira vez, o `DatabaseSeeder` irá invocar o Scrapper automaticamente para popular as tabelas principais de campeões._
+**Inicialização do Banco (Primeira Execução):** Abra outro terminal e execute os seguintes comandos `curl` para popular os dados e criar o usuário de teste:
+   * Buscar matchups (Demora ~40 min): `curl -X POST http://localhost:8080/matchups/update`
+   * Atualizar rotas comuns: `curl -X PUT http://localhost:8080/champions`
+   * Criar usuário: `curl -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"name\": \"teste\", \"email\": \"teste@gmail.com\"}"`
+
+_Nota: Ao subir a aplicação pela primeira vez, o `DatabaseSeeder` irá invocar o Scrapper automaticamente para popular a tabela de campeões._
 
 ### Rodando o Frontend
 
