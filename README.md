@@ -100,6 +100,8 @@ Simply open the `/frontend/index.html` file in any modern browser, or use an ext
 - [ ] **Task Scheduling (Cron Jobs):** Implement Spring's `@Scheduled` annotation so the `ScrapperService` runs automatically during the night, keeping the database updated without manual intervention.
     
 - [ ] **Frontend Algorithm Optimization:** Refactor search logic (`find/filter`) using HashMaps (JS Objects/Maps) to reduce time complexity from $O(n)$ to $O(1)$.
+
+- [ ] **Authentication System:** Implement Spring Security and JWT to manage real user access and replace the current hardcoded ID.
     
 - [ ] **Full Dockerization:** Create Docker images for both the Backend and Frontend, unifying the infrastructure.
     

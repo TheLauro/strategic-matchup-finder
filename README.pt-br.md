@@ -101,6 +101,8 @@ Basta abrir o arquivo `/frontend/index.html` em qualquer navegador moderno, ou u
 
 - [ ] **Otimização de Algoritmos no Frontend:** Refatoração das lógicas de busca (`find/filter`) utilizando HashMaps (Objetos/Maps em JS) para reduzir a complexidade de tempo de $O(n)$ para $O(1)$.
 
+- [ ] **Sistema de Autenticação:** Implementar Spring Security e JWT para gerenciar o acesso real de usuários e substituir o ID fixo (hardcoded) atual.
+
 - [ ] **Dockerização Completa:** Criar as imagens Docker para o Backend e o Frontend, unificando a infraestrutura.
 
 - [ ] **Deploy em Nuvem (CI/CD):** Realizar o deploy da aplicação em serviços de nuvem (como AWS, Render ou Railway) utilizando as imagens geradas na etapa de dockerização.
