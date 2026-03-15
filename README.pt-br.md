@@ -88,6 +88,9 @@ _Nota: Ao subir a aplicação pela primeira vez, o `DatabaseSeeder` irá invocar
 
 Basta abrir o arquivo `/frontend/index.html` em qualquer navegador moderno, ou utilizar uma extensão como o _Live Server_ do VS Code.
 
+
+**_Para rodar a versão final compilada sem precisar baixar o código-fonte, acesse a aba de Releases e siga as instruções lá contidas._**
+
 ---
 
 ## 📈 Próximos Passos (Roadmap)

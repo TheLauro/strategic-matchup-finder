@@ -88,6 +88,9 @@ _Note: When running the application for the first time, the `DatabaseSeeder` wil
 
 Simply open the `/frontend/index.html` file in any modern browser, or use an extension like VS Code's _Live Server_.
 
+
+**_To run the final compiled version without downloading the source code, head over to the Releases tab and follow the instructions provided there._**
+
 ---
 
 ## 📈 Roadmap & Next Steps
