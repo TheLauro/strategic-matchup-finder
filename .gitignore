@@ -101,4 +101,5 @@ nb-configuration.xml
 ##############################
 ## Frontend
 ##############################
-frontend.rar
+*.rar
+*.zip
